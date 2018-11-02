@@ -25,9 +25,12 @@
 //		{
 //			num--;
 //		}
-//		tmp = arr[i];
-//		arr[i] = arr[num];
-//		arr[num] = tmp;
+//		if(i<num)
+//		{
+//			tmp = arr[i];
+//			arr[i] = arr[num];
+//			arr[num] = tmp;
+//		}
 //	}
 //
 //}
@@ -40,7 +43,7 @@
 //	for(i=0; i<10; i++)
 //		scanf("%d",&arr[i]);
 //	
-//	my_sort(arr,9);
+//	my_sort(arr,sizeof(arr)/sizeof(arr[0])-1);
 //
 //	for(i=0; i<10; i++)
 //		printf("%d ",arr[i]);
@@ -71,20 +74,26 @@
 #define COL 3
 #include<stdio.h>
 
-int Is_Exit(int arr[ROW][COL], int num)
+int Is_Exit(int arr[ROW][COL], int num, int *px, int *py)
 {
 	int i = ROW;
 	int j = COL;
 
 	while(1)
 	{
-		if(arr[i][j] == num)
+		if (arr[i][j] == num)
+		{
+			*px = i+1;
+			*py = j+1;
 			return 1;
+		}
 		else if(arr[i-1][j] >=num)
 			i--;
 		else if(arr[i][j-1] >=num)
 			j--;
 	}
+	*px = -1;
+	*py = -1;
 	return 0;
 	
 }
@@ -94,11 +103,13 @@ int main()
 	int arr[ROW][COL] = {1,2,3,4,5,6,7,8,9};
 	int num = 0;
 	int ret = 0;
+	int px = 0;
+	int py = 0;
 
 	scanf("%d",&num);
-	ret = Is_Exit(arr,num);
+	ret = Is_Exit(arr,num,&px,&py);
 
-	printf("%d",ret);
+	printf("%d,%d",px,py);
 
 	return 0;
 }
