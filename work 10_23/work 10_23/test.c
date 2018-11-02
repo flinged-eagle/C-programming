@@ -17,6 +17,15 @@ unsigned int reverse_bit(unsigned int value)
 {
 	unsigned int ret = 0;
 	int i = 31;
+	
+	//for (i = 0; i < 32; i++)
+	//{
+	//  //保存上一位结果
+	//	ret <<= 1;
+	//  //保存结果在ret 的第一位
+	//	ret |= (value >> i) & 1;
+	//}
+
 
 	while(value)
 	{
@@ -44,18 +53,13 @@ int main()
 
 int Add(int a, int b)
 {
-	if(a%2 == 1 && b%2 ==1)
-	{
-		a >>= 1;
-		b >>= 1;
-		return a + b + 1;
-	}else
-	{
-		a >>= 1;
-		b >>= 1;
-		return a + b;
-	}
-	
+//	(a + b) >> 1;
+//  a + ((b-a) >> 1);
+
+//二进制各位求平均
+//相同位 &	
+//不同位 ^   >>1
+	return (a&b) + ((a^b) >> 1);
 }
 
 int main()
