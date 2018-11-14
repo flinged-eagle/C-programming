@@ -102,11 +102,13 @@ void Alter_List()
 			printf("请输入修改的姓名：\n");
 			scanf("%s", name);
 			strcpy(p1.List[i].name, name);
+			printf("修改成功\n");
 			break;
 		case 2:
 			printf("请输入修改的号码：\n");
 			scanf("%s", name);
 			strcpy(p1.List[i].number, name);
+			printf("修改成功\n");
 			break;
 		default:
 			printf("error\n");
@@ -155,7 +157,7 @@ void Clear_List()
 {
 	char p = 0;
 
-	fflush(stdin);
+	fflush(stdin);  //清空键盘缓存区
 	printf("确认清空(y/s)\n");
 	scanf("%c", &p);
 	if (p == 'y')
