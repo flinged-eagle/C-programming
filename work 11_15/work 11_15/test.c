@@ -1,14 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-#include<stdio.h>
-#include<stdlib.h>
 #include<string.h>
 
+//姓名、性别、年龄、电话、住址
 typedef struct Person_info
 {
 	char name[30];
+	int age;
+	char sex[5];
 	char number[30];
+	char address[40];
+
 }Person_info;
 
 
@@ -42,28 +44,35 @@ void init()
 //	}
 //}
 
-void check_capacity()
-{
-	Person_info *p2;
-	if (p1.List_capacity == p1.size + 1)
-	{
-		p1.List_capacity *= 5;
-		p2 = (Person_info*)malloc(sizeof(Person_info)*p1.List_capacity);
+//void check_capacity()
+//{
+//	Person_info *p2;
+//	if (p1.List_capacity == p1.size + 1)
+//	{
+//		p1.List_capacity *= 5;
+//		p2 = (Person_info*)malloc(sizeof(Person_info)*p1.List_capacity);
+//
+//		for (int i = 0; i < p1.size; i++)
+//		*p2 = p1.List[i];
+//		p1.List = p2;
+//	}
+//}
 
-		for (int i = 0; i < p1.size; i++)
-		*p2 = p1.List[i];
-		p1.List = p2;
-	}
-}
-
+//姓名、性别、年龄、电话、住址
 void Add_List()
 {
-	check_capacity();
+	//check_capacity();
 
 	printf("请输入添加姓名：\n");
 	scanf("%s", p1.List[p1.size].name);
+	printf("请输入添加性别：\n");
+	scanf("%s", p1.List[p1.size].sex);
+	printf("请输入添加年龄：\n");
+	scanf("%d", &p1.List[p1.size].age);
 	printf("请输入添加号码：\n");
 	scanf("%s", p1.List[p1.size].number);
+	printf("请输入添加住址：\n");
+	scanf("%s", p1.List[p1.size].address);
 	p1.size++;
 	printf("添加一条信息成功！\n");
 }
@@ -80,7 +89,10 @@ void Del_List()
 		if (strcmp(name, p1.List[i].name) == 0)
 		{
 			strcpy(p1.List[i].name, p1.List[p1.size - 1].name);
+			strcpy(p1.List[i].sex, p1.List[p1.size - 1].sex);
+			p1.List[i].age = p1.List[p1.size - 1].age;
 			strcpy(p1.List[i].number, p1.List[p1.size - 1].number);
+			strcpy(p1.List[i].address, p1.List[p1.size - 1].address);
 			--p1.size;
 			printf("删除成功\n");
 			return;
@@ -101,7 +113,7 @@ void Find_List()
 	{
 		if (strcmp(name, p1.List[i].name) == 0)
 		{
-			printf("[%d]	%s		%s\n", i, p1.List[i].name, p1.List[i].number);
+			printf("[%d]		%s		%s		%d		%s		%s\n", i, p1.List[i].name, p1.List[i].sex, p1.List[i].age, p1.List[i].number, p1.List[i].address);
 			count++;
 		}
 	}
@@ -112,6 +124,7 @@ void Alter_List()
 {
 	char name[10] = { 0 };
 	int i = 0;
+	int age = 0;
 
 	printf("请输入修改的姓名：\n");
 	scanf("%s", name);
@@ -121,9 +134,9 @@ void Alter_List()
 		i++;
 	}
 	int num = -1;
-	if (i != p1.size)
+	if (i < p1.size)
 	{
-		printf("请输入需要修改的参数:\n1.name	2.number\n");
+		printf("请输入需要修改的参数:\n1.name	2.sex 3.age 4.number 5.address\n");
 		scanf("%d", &num);
 		switch (num)
 		{
@@ -134,9 +147,27 @@ void Alter_List()
 			printf("修改成功\n");
 			break;
 		case 2:
+			printf("请输入修改的性别：\n");
+			scanf("%s", name);
+			strcpy(p1.List[i].sex, name);
+			printf("修改成功\n");
+			break;
+		case 3:
+			printf("请输入修改的年龄：\n");
+			scanf("%d", &age);
+			p1.List[i].age = age;
+			printf("修改成功\n");
+			break;
+		case 4:
 			printf("请输入修改的号码：\n");
 			scanf("%s", name);
 			strcpy(p1.List[i].number, name);
+			printf("修改成功\n");
+			break;
+		case 5:
+			printf("请输入修改的地址：\n");
+			scanf("%s", name);
+			strcpy(p1.List[i].address, name);
 			printf("修改成功\n");
 			break;
 		default:
@@ -160,13 +191,26 @@ void Sort_List()
 		{
 			if (strcmp(p1.List[i].name, p1.List[j].name) > 0)
 			{
+				// name sex age number address
 				strcpy(pm, p1.List[i].name);
 				strcpy(p1.List[i].name, p1.List[j].name);
 				strcpy(p1.List[j].name, pm);
 
+				strcpy(pm, p1.List[i].sex);
+				strcpy(p1.List[i].sex, p1.List[j].sex);
+				strcpy(p1.List[j].sex, pm);
+
+				int age = p1.List[i].age;
+				p1.List[i].age = p1.List[j].age;
+				p1.List[j].age = age;
+
 				strcpy(pm, p1.List[i].number);
 				strcpy(p1.List[i].number, p1.List[j].number);
 				strcpy(p1.List[j].number, pm);
+
+				strcpy(pm, p1.List[i].address);
+				strcpy(p1.List[i].address, p1.List[j].address);
+				strcpy(p1.List[j].address, pm);
 			}
 		}
 	}
@@ -177,7 +221,8 @@ void Show_List()
 {
 	for (int i = 0; i < p1.size; i++)
 	{
-		printf("[%d]	%s	%s\n", i, p1.List[i].name, p1.List[i].number);
+		printf("[%d]		%s		%s		%d		%s		%s\n", i, p1.List[i].name, p1.List[i].sex, p1.List[i].age, p1.List[i].number, p1.List[i].address);
+
 	}
 	printf("打印了%d条信息\n", p1.size);
 }
