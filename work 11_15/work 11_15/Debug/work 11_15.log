@@ -1,4 +1,4 @@
-﻿生成启动时间为 2018/11/15 19:51:43。
+﻿生成启动时间为 2018/11/17 22:19:37。
      1>项目“D:\code\C-programming\work 11_15\work 11_15\work 11_15.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt test.c
@@ -10,4 +10,4 @@
 
 生成成功。
 
-已用时间 00:00:00.56
+已用时间 00:00:00.69

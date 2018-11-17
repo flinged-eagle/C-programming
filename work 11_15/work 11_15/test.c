@@ -35,14 +35,14 @@ void init()
 	p1.List = (Person_info*)malloc(sizeof(Person_info)* p1.List_capacity);
 }
 
-//void check_capacity()
-//{
-//	if (p1.List_capacity == p1.size + 1)
-//	{
-//		p1.List_capacity *= 5;
-//		p1.List = (Person_info*)realloc(p1.List, sizeof(Person_info)* p1.List_capacity);
-//	}
-//}
+void check_capacity()
+{
+	if (p1.List_capacity == p1.size + 1)
+	{
+		p1.List_capacity *= 5;
+		p1.List = (Person_info*)realloc(p1.List, sizeof(Person_info)* p1.List_capacity);
+	}
+}
 
 //void check_capacity()
 //{
@@ -61,7 +61,7 @@ void init()
 //姓名、性别、年龄、电话、住址
 void Add_List()
 {
-	//check_capacity();
+	check_capacity();
 
 	printf("请输入添加姓名：\n");
 	scanf("%s", p1.List[p1.size].name);
@@ -221,7 +221,7 @@ void Show_List()
 {
 	for (int i = 0; i < p1.size; i++)
 	{
-		printf("[%d]		%s		%s		%d		%s		%s\n", i, p1.List[i].name, p1.List[i].sex, p1.List[i].age, p1.List[i].number, p1.List[i].address);
+		printf("[%d]\t%s\t%s\t%d\t%s\t%s\n", i, p1.List[i].name, p1.List[i].sex, p1.List[i].age, p1.List[i].number, p1.List[i].address);
 
 	}
 	printf("打印了%d条信息\n", p1.size);
@@ -244,6 +244,46 @@ void Clear_List()
 		printf("取消\n");
 }
 
+void save() //保存到文件
+{
+	FILE *fp = fopen("../text.txt", "w");
+	if (fp == NULL)
+	{
+		printf("保存失败！\n");
+		return;
+	}
+
+	for (int i = 0; i < p1.size; i++)
+	{
+		fwrite(p1.List+i, sizeof(Person_info),1,fp);
+	}
+	fclose(fp);
+	printf("保存完成！保存了%d个成员\n",p1.size);
+}
+
+void load() //加载
+{
+	Person_info tmp = { 0 };
+
+	FILE *fp = fopen("../text.txt", "r");
+	if (fp == NULL)
+	{
+		printf("读取失败！\n");
+		return;
+	}
+	//fread 返回值为实际读到的元素个数
+	while (fread(&tmp, sizeof(Person_info), 1, fp))
+	{
+		check_capacity();
+		p1.List[p1.size] = tmp;
+		p1.size++;
+	}
+	fclose(fp);
+
+	printf("加载完成！加载了%d个对象\n",p1.size);
+
+}
+
 void menu()
 {
 	printf("-----------------------------------\n");
@@ -263,6 +303,7 @@ int main()
 {
 	int choice = 1;
 	init();
+	load();
 	//实现增删改查
 	while (choice)
 	{
@@ -286,7 +327,7 @@ int main()
 			break;
 		case Clear:Clear_List(); // 整体清空
 			break;
-		case 0:
+		case 0: save();
 			break;
 		default:
 			printf("输入有误\n");
